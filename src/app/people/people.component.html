@@ -1,0 +1,26 @@
+<div style="margin:20px">
+    <ul>
+        
+          <li *ngFor="let person of peopleArray; let i = index"> 
+            {{person.name}} 
+            <button class="btn btn-default btn-sm" (click)="hideMe[i] = !hideMe[i]"> Show</button>
+             <button class="btn btn-default btn-sm" (click)="deletePerson(person)">Remove</button>
+        
+            <div  [hidden]="hideMe[i]">
+              E-mail:  {{person.mail}} <br/>
+              Address: {{person.address}}
+            </div>
+          </li>
+        
+        
+        </ul>
+        
+        <br/>
+        <hr/>
+        <h4>Add a new person: </h4>
+        Name : <input [(ngModel)]="newPersonName" class="form-control"/>
+        Mail : <input [(ngModel)]="newPersonMail" class="form-control"/>
+        Address : <input [(ngModel)]="newPersonAddress" class="form-control"/>
+        
+        <button class="btn btn-primary" (click)="addPerson()">Add person</button>
+</div>
