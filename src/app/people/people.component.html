@@ -6,7 +6,7 @@
             <button class="btn btn-default btn-sm" (click)="hideMe[i] = !hideMe[i]"> Show</button>
              <button class="btn btn-default btn-sm" (click)="deletePerson(person)">Remove</button>
         
-            <div  [hidden]="hideMe[i]">
+            <div  [hidden]="hideMe[i]"> <!-- "Hideme is used to show\hide rows" -->
               E-mail:  {{person.mail}} <br/>
               Address: {{person.address}}
             </div>

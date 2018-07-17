@@ -10,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class PeopleComponent implements OnInit {
   peopleArray:any[] = [] 
   hideMe:boolean[] = []
-  newPersonName:string 
+  newPersonName:string // TODO : create a Person class
   newPersonMail:string 
   newPersonAddress:string
 
