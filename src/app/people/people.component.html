@@ -20,9 +20,9 @@
         <br/>
         <hr/>
         <h4>Add a new person: </h4>
-        Name : <input [(ngModel)]="newPersonName" class="form-control"/>
-        Mail : <input [(ngModel)]="newPersonMail" class="form-control"/>
-        Address : <input [(ngModel)]="newPersonAddress" class="form-control"/>
+        Name : <input [(ngModel)]="newPerson.name" class="form-control"/>
+        Mail : <input [(ngModel)]="newPerson.mail" class="form-control"/>
+        Address : <input [(ngModel)]="newPerson.address" class="form-control"/>
         
         <button class="btn btn-primary" (click)="addPerson()">Add person</button>
 </div>

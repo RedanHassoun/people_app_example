@@ -1,6 +1,6 @@
+import { Person } from 'src/app/model/person';
 import { PeopleService } from './../services/people.service';
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core'; 
 
 @Component({
   selector: 'app-people',
@@ -8,11 +8,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./people.component.css']
 })
 export class PeopleComponent implements OnInit {
-  peopleArray:any[] = [] 
+  peopleArray:Person[] = [] 
   hideMe:boolean[] = []
-  newPersonName:string // TODO : create a Person class
-  newPersonMail:string 
-  newPersonAddress:string
+  newPerson:Person = new Person()
 
   constructor(private peopleService:PeopleService) { }
 
@@ -26,18 +24,14 @@ export class PeopleComponent implements OnInit {
                         console.log('An error occurred: '+error)
                         alert('An error occurred while connecting to server')
                       })
-    this.newPersonMail = ""
-    this.newPersonName = ""
-    this.newPersonAddress = ""
+    this.newPerson.reset()
  
   }
 
   private addToPeople(person){
     this.peopleArray.push(person)
     this.hideMe.push(true)
-    this.newPersonMail = ""
-    this.newPersonName = ""
-    this.newPersonAddress = ""
+    this.newPerson.reset()
   }
 
   private initPeople(people){
@@ -67,26 +61,20 @@ export class PeopleComponent implements OnInit {
  
   addPerson(){
     if(
-        (this.newPersonMail==="") || 
-        (this.newPersonName==="") || 
-        (this.newPersonAddress==="") ){
+        (this.newPerson.getName() ==="") || 
+        (this.newPerson.getAddress() ==="") || 
+        (this.newPerson.getMail() ==="") ){
       alert("Missing person data")
-    }else{
-      var person = {
-        name: this.newPersonName,
-        mail : this.newPersonMail,
-        address : this.newPersonAddress
-      }
-      this.peopleService.createPerson(person)
+    }else{ 
+      this.peopleService.createPerson(this.newPerson)
                           .subscribe((response)=>{
                             console.log('Create person response: '+JSON.stringify(response))
                             this.addToPeople(response.json()) 
-                            this.newPersonMail = ""
-                            this.newPersonName = ""
-                            this.newPersonAddress = ""
+                            this.newPerson.reset()
                           },
                           (error)=>{
                             console.log('An error occurred: '+error)
+                            this.newPerson.reset()
                             alert('An error occurred while connecting to server')
                           })
     }
