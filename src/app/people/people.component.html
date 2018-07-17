@@ -11,10 +11,12 @@
               Address: {{person.address}}
             </div>
           </li>
-        
-        
         </ul>
         
+		<div *ngIf="peopleArray == 0">
+          <h5>No people found in the database.</h5>
+        </div>
+
         <br/>
         <hr/>
         <h4>Add a new person: </h4>
