@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PeopleComponent implements OnInit {
   peopleArray:Person[] = [] 
-  hideMe:boolean[] = []
+  hideMe:boolean[] = [] // TODO : include 'hidden' in the person fields
   newPerson:Person = new Person()
 
   constructor(private peopleService:PeopleService) { }
