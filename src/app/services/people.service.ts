@@ -5,7 +5,7 @@ import { Http } from '@angular/http'
   providedIn: 'root'
 })
 export class PeopleService {
-  private url : string = 'http://localhost:3000/';
+  private url : string = '/api/';
   private peopleArray:any = []
 
   constructor(private http: Http) {

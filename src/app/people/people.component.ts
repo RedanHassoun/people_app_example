@@ -21,7 +21,11 @@ export class PeopleComponent implements OnInit {
                         .subscribe((response)=>{
                           console.log('ngOnInit | '+response.json())
                           this.initPeople( response.json())
-                        })
+                        },
+                      (error)=>{
+                        console.log('An error occurred: '+error)
+                        alert('An error occurred while connecting to server')
+                      })
     this.newPersonMail = ""
     this.newPersonName = ""
     this.newPersonAddress = ""
@@ -54,6 +58,10 @@ export class PeopleComponent implements OnInit {
                           this.removeFromPeople(personToDelete)
                           alert('Deleted : '+personToDelete.name+
                                 ', '+this.peopleArray.length+' left')
+                        },
+                        (error)=>{
+                          console.log('An error occurred: '+error)
+                          alert('An error occurred while connecting to server')
                         })
   }
  
@@ -76,6 +84,10 @@ export class PeopleComponent implements OnInit {
                             this.newPersonMail = ""
                             this.newPersonName = ""
                             this.newPersonAddress = ""
+                          },
+                          (error)=>{
+                            console.log('An error occurred: '+error)
+                            alert('An error occurred while connecting to server')
                           })
     }
 
