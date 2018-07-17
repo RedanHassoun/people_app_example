@@ -1,16 +1,17 @@
-class ServerApp{
-  private readonly express = require('express')
-  private readonly bodyParser = require("body-parser");
-  private readonly uuidv1 = require('uuid/v1');
-  private readonly app = this.express()
+import * as express from 'express';
+import * as bodyParser from 'body-parser';
+import * as uuidv1 from 'uuid/v1'; 
+ 
+class ServerApp{  
+  private readonly app = express()
   private readonly port = 8080
   private readonly peopleArray:any= []
 
   init(){
-    this.app.use(this.bodyParser.json());
+    this.app.use(bodyParser.json());
     
     var initPeople = ()=>{
-      this.peopleArray.push({id:this.uuidv1(),
+      this.peopleArray.push({id:uuidv1(),
         name:'redan',mail:'redan@mail.com',address:"Tel-Aviv"}) 
     }
     
@@ -22,7 +23,7 @@ class ServerApp{
     })
     
     this.app.post('/api/createPerson', (req,res)=>{
-        var personId = this.uuidv1();
+        var personId = uuidv1();
         var personToAdd = {id:personId,name:req.body.name,mail:req.body.mail,address: req.body.address}
         this.peopleArray.push(personToAdd)
         console.log(JSON.stringify(personToAdd)+', added.')
