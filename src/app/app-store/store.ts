@@ -34,9 +34,7 @@ function addToPeople(state,action):IAppState{
 function removeFromPeople(state,action):IAppState{
     var peopleFromStore:Array<Person> = state.peopleArray
     var indexOfPerson = peopleFromStore.indexOf(action.person)
-    console.log('REDAN: '+peopleFromStore.length)
     peopleFromStore.splice(indexOfPerson,1)
-    console.log('REDAN: '+peopleFromStore.length)
     return {peopleArray:peopleFromStore}
 }
 
