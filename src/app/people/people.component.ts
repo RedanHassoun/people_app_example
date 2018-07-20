@@ -1,3 +1,6 @@
+import { FETCH_PEOPLE_SUCCESS, ADD_TO_PEOPLE, REMOVE_FROM_PEOPLE } from './../app-store/actions';
+import { IAppState } from './../app-store/store';
+import { NgRedux } from '@angular-redux/store';
 import { Person } from 'src/app/model/person';
 import { PeopleService } from './../services/people.service';
 import { Component, OnInit } from '@angular/core'; 
@@ -8,17 +11,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./people.component.css']
 })
 export class PeopleComponent implements OnInit {
-  peopleArray:Person[] = [] 
+  peopleArray:Array<Person> = [] 
   hideMe:boolean[] = [] // TODO : include 'hidden' in the person fields
   newPerson:Person = new Person()
 
-  constructor(private peopleService:PeopleService) { }
+  constructor(private peopleService:PeopleService,
+              private ngRedux:NgRedux<IAppState>) {
+      ngRedux.subscribe(()=>{
+        var currState = ngRedux.getState()
+        this.peopleArray = currState.peopleArray
+      })
+  }
 
   ngOnInit() { 
     this.peopleService.getAllPeople()
                         .subscribe((response)=>{
                           console.log('ngOnInit | '+response.json())
-                          this.initPeople( response.json())
+                          this.loadPeople( response.json())
                         },
                       (error)=>{
                         console.log('An error occurred: '+error)
@@ -29,19 +38,18 @@ export class PeopleComponent implements OnInit {
   }
 
   private addToPeople(person){
-    this.peopleArray.push(person)
+    this.ngRedux.dispatch({type:ADD_TO_PEOPLE,person:person})
     this.hideMe.push(true)
     this.newPerson.reset()
   }
-
-  private initPeople(people){
-    this.peopleArray = people 
+ 
+  private loadPeople(people){
     this.hideMe = new Array(this.peopleArray.length).fill(true);
+    this.ngRedux.dispatch({type:FETCH_PEOPLE_SUCCESS,people:people})
   }
 
   private removeFromPeople(person){
-    var index = this.peopleArray.indexOf(person)
-    this.peopleArray.splice(index,1)
+    this.ngRedux.dispatch({type:REMOVE_FROM_PEOPLE,person:person})
     this.hideMe.splice(0,1)
   }
 
@@ -60,10 +68,7 @@ export class PeopleComponent implements OnInit {
   }
  
   addPerson(){
-    if(
-        (this.newPerson.getName() ==="") || 
-        (this.newPerson.getAddress() ==="") || 
-        (this.newPerson.getMail() ==="") ){
+    if(this.newPerson.isEmpty()){
       alert("Missing person data")
     }else{ 
       this.peopleService.createPerson(this.newPerson)

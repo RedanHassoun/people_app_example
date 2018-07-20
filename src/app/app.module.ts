@@ -1,3 +1,4 @@
+import { IAppState, rootReducer, INITIAL_STATE } from './app-store/store';
 import { Http } from '@angular/http';
 import { PeopleService } from './services/people.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -6,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { PeopleComponent } from './people/people.component';
 import { HttpModule } from '@angular/http';
+import {NgRedux,NgReduxModule} from '@angular-redux/store'
 
 @NgModule({
   declarations: [
@@ -15,11 +17,16 @@ import { HttpModule } from '@angular/http';
   imports: [
     BrowserModule,
     HttpModule,
-    FormsModule
+    FormsModule,
+    NgReduxModule
   ],
   providers: [
     PeopleService
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+    constructor(private ngRedux:NgRedux<IAppState>){
+      this.ngRedux.configureStore(rootReducer,INITIAL_STATE)
+    }
+ }

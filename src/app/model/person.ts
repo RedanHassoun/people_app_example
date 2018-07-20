@@ -50,4 +50,10 @@ export class Person {
         this.mail = ""
         this.address = ""
     }
+
+    isEmpty(){
+        return (this.getName().trim() ==="") || 
+        (this.getAddress().trim() ==="") || 
+        (this.getMail().trim() ==="")
+    }
 }
