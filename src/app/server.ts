@@ -10,7 +10,7 @@ class ServerApp{
   constructor(private port:number){
   }
 
-  private initPeople = ()=>{
+  private initPeople(){
     this.peopleArray.push({id:uuidv1(),
       name:'redan',mail:'redan@mail.com',gender:'Male',address:"Tel-Aviv"}) 
   }
