@@ -12,15 +12,16 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./add-person.component.css']
 })
 export class AddPersonComponent implements OnInit {
-  newPerson:Person = new Person()
+  newPerson:Person
 
   constructor(private peopleService:PeopleService,
               private ngRedux:NgRedux<IAppState>,
               private dialogRef:MatDialogRef<AddPersonComponent>) { 
-
   }
 
   ngOnInit() {
+    this.newPerson = new Person()
+    this.newPerson.reset()
   }
 
   addPerson(){
@@ -43,7 +44,10 @@ export class AddPersonComponent implements OnInit {
 
 
   private addToPeople(person){
+    /* Dispatch an action to redux reducer */
     this.ngRedux.dispatch({type:ADD_TO_PEOPLE,person:person}) 
+    
+    /* Housekeeping */
     this.newPerson.reset()
     this.dialogRef.close()
   }

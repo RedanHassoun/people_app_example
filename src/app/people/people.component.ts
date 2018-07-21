@@ -13,8 +13,7 @@ import { AddPersonComponent } from 'src/app/add-person/add-person.component';
   styleUrls: ['./people.component.css']
 })
 export class PeopleComponent implements OnInit {
-  peopleArray:Array<Person> = [] 
-  newPerson:Person = new Person()
+  peopleArray:Array<Person> = []  
 
   constructor(private peopleService:PeopleService,
               private ngRedux:NgRedux<IAppState>,
@@ -34,8 +33,7 @@ export class PeopleComponent implements OnInit {
                       (error)=>{
                         console.log('An error occurred: '+error)
                         alert('An error occurred while connecting to server')
-                      })
-    this.newPerson.reset()
+                      }) 
  
   }
 
