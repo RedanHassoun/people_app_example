@@ -1,22 +1,24 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as uuidv1 from 'uuid/v1'; 
- 
+const SERVER_PORT:number = 8080
+
 class ServerApp{  
   private readonly app = express()
-  private readonly port = 8080
-  private readonly peopleArray:any= []
+  private readonly peopleArray:any= [] 
+
+  constructor(private port:number){
+  }
+
+  private initPeople = ()=>{
+    this.peopleArray.push({id:uuidv1(),
+      name:'redan',mail:'redan@mail.com',gender:'Male',address:"Tel-Aviv"}) 
+  }
 
   init(){
     this.app.use(bodyParser.json());
     
-    var initPeople = ()=>{
-      this.peopleArray.push({id:uuidv1(),
-        name:'redan',mail:'redan@mail.com',gender:'Male',address:"Tel-Aviv"}) 
-    }
-    
-    initPeople()
-    
+    this.initPeople()
     
     this.app.get('/api/getAllPeople', (req,res)=>{
       res.send(this.peopleArray)
@@ -52,13 +54,11 @@ class ServerApp{
       res.send({status:'OK'})
     })
     
-    
-    
     this.app.listen(this.port,()=>{})
   }
 }
 
-let serverApp:ServerApp = new ServerApp() 
+let serverApp:ServerApp = new ServerApp(SERVER_PORT) 
 serverApp.init()
 
 
