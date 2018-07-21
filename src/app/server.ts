@@ -50,8 +50,11 @@ class ServerApp{
       if(index > -1) {
         this.peopleArray.splice(index,1)
         console.log('Deleted.')
+        res.send({status:'OK'})
+      }else{
+        res.send({status:'NOT_OK'})
       }
-      res.send({status:'OK'})
+      
     })
     
     this.app.listen(this.port,()=>{})
