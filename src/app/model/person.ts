@@ -3,6 +3,7 @@ export class Person {
     name:string = ""
     mail:string = ""
     address:string = ""
+    isHidden:boolean = true 
 
     setId(id:string){
         this.id = id 

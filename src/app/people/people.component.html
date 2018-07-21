@@ -3,10 +3,10 @@
         
           <li *ngFor="let person of peopleArray; let i = index"> 
             {{person.name}} 
-            <button class="btn btn-default btn-sm" (click)="hideMe[i] = !hideMe[i]"> Show</button>
+            <button class="btn btn-default btn-sm" (click)="person.isHidden = !person.isHidden"> Show</button>
              <button class="btn btn-default btn-sm" (click)="deletePerson(person)">Remove</button>
         
-            <div  [hidden]="hideMe[i]"> <!-- "Hideme is used to show\hide rows" -->
+            <div  [hidden]="!person.isHidden"> 
               E-mail:  {{person.mail}} <br/>
               Address: {{person.address}}
             </div>

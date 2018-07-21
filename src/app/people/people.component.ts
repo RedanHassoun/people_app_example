@@ -12,7 +12,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PeopleComponent implements OnInit {
   peopleArray:Array<Person> = [] 
-  hideMe:boolean[] = [] // TODO : include 'hidden' in the person fields
   newPerson:Person = new Person()
 
   constructor(private peopleService:PeopleService,
@@ -38,28 +37,23 @@ export class PeopleComponent implements OnInit {
   }
 
   private addToPeople(person){
-    this.ngRedux.dispatch({type:ADD_TO_PEOPLE,person:person})
-    this.hideMe.push(true)
+    this.ngRedux.dispatch({type:ADD_TO_PEOPLE,person:person}) 
     this.newPerson.reset()
   }
  
-  private loadPeople(people){
-    this.hideMe = new Array(this.peopleArray.length).fill(true);
+  private loadPeople(people){ 
     this.ngRedux.dispatch({type:FETCH_PEOPLE_SUCCESS,people:people})
   }
 
   private removeFromPeople(person){
-    this.ngRedux.dispatch({type:REMOVE_FROM_PEOPLE,person:person})
-    this.hideMe.splice(0,1)
+    this.ngRedux.dispatch({type:REMOVE_FROM_PEOPLE,person:person}) 
   }
 
   deletePerson(personToDelete){
     this.peopleService.deletePerson(personToDelete)
                         .subscribe( (response) => {
                           console.log('Deleted : '+JSON.stringify(personToDelete))
-                          this.removeFromPeople(personToDelete)
-                          alert('Deleted : '+personToDelete.name+
-                                ', '+this.peopleArray.length+' left')
+                          this.removeFromPeople(personToDelete) 
                         },
                         (error)=>{
                           console.log('An error occurred: '+error)
@@ -69,7 +63,7 @@ export class PeopleComponent implements OnInit {
  
   addPerson(){
     if(this.newPerson.isEmpty()){
-      alert("Missing person data")
+      alert("Missing person input")
     }else{ 
       this.peopleService.createPerson(this.newPerson)
                           .subscribe((response)=>{
