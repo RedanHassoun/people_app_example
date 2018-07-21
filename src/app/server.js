@@ -14,7 +14,7 @@ var ServerApp = /** @class */ (function () {
         this.app.use(bodyParser.json());
         var initPeople = function () {
             _this.peopleArray.push({ id: uuidv1(),
-                name: 'redan', mail: 'redan@mail.com', address: "Tel-Aviv" });
+                name: 'redan', mail: 'redan@mail.com', gender: 'Male', address: "Tel-Aviv" });
         };
         initPeople();
         this.app.get('/api/getAllPeople', function (req, res) {
@@ -22,7 +22,11 @@ var ServerApp = /** @class */ (function () {
         });
         this.app.post('/api/createPerson', function (req, res) {
             var personId = uuidv1();
-            var personToAdd = { id: personId, name: req.body.name, mail: req.body.mail, address: req.body.address };
+            var personToAdd = { id: personId,
+                name: req.body.name,
+                mail: req.body.mail,
+                gender: req.body.gender,
+                address: req.body.address };
             _this.peopleArray.push(personToAdd);
             console.log(JSON.stringify(personToAdd) + ', added.');
             console.log('Array size now is : ' + _this.peopleArray.length);

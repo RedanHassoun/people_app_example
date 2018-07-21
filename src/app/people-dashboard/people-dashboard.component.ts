@@ -9,12 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PeopleDashboardComponent implements OnInit {
   numOfPeople:number
+  numOfMales:number
   lastUpdate:Date
 
   constructor(private ngRedux:NgRedux<IAppState>) {
     this.ngRedux.subscribe(()=>{
       var stateFromStore = ngRedux.getState()
-      this.numOfPeople = stateFromStore.peopleArray.length
+      var peopleArray =  stateFromStore.peopleArray
+      this.numOfPeople = peopleArray.length
+      this.numOfMales = peopleArray.filter(x=> x.gender === 'Male').length
       this.lastUpdate = new Date()
     })
   }

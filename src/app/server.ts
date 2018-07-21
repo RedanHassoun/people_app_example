@@ -12,7 +12,7 @@ class ServerApp{
     
     var initPeople = ()=>{
       this.peopleArray.push({id:uuidv1(),
-        name:'redan',mail:'redan@mail.com',address:"Tel-Aviv"}) 
+        name:'redan',mail:'redan@mail.com',gender:'Male',address:"Tel-Aviv"}) 
     }
     
     initPeople()
@@ -24,7 +24,11 @@ class ServerApp{
     
     this.app.post('/api/createPerson', (req,res)=>{
         var personId = uuidv1();
-        var personToAdd = {id:personId,name:req.body.name,mail:req.body.mail,address: req.body.address}
+        var personToAdd = {id:personId,
+                          name:req.body.name,
+                          mail:req.body.mail,
+                          gender:req.body.gender,
+                          address:req.body.address}
         this.peopleArray.push(personToAdd)
         console.log(JSON.stringify(personToAdd)+', added.')
         console.log('Array size now is : '+this.peopleArray.length)

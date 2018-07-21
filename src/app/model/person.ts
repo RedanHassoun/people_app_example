@@ -3,6 +3,7 @@ export class Person {
     name:string = ""
     mail:string = ""
     address:string = ""
+    gender:string = ""
     isHidden:boolean = true 
 
     setId(id:string){
@@ -37,11 +38,16 @@ export class Person {
         return this.address
     }
 
+    getGender(){
+        return this.gender
+    }
+
     json(){
         return {
             id: this.id,
             name : this.name,
             mail : this.mail,
+            gender: this.gender,
             address : this.address 
         }
     }
@@ -50,11 +56,13 @@ export class Person {
         this.name = ""
         this.mail = ""
         this.address = ""
+        this.gender = ""
     }
 
     isEmpty(){
         return (this.getName().trim() ==="") || 
         (this.getAddress().trim() ==="") || 
-        (this.getMail().trim() ==="")
+        (this.getMail().trim() ==="") || 
+        (this.getGender().trim() ==="")
     }
 }

@@ -12,7 +12,7 @@ import { PeopleDashboardComponent } from './people-dashboard/people-dashboard.co
 import {MatDialogModule} from '@angular/material/dialog';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import { AddPersonComponent } from './add-person/add-person.component';
-
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -30,7 +30,8 @@ import { AddPersonComponent } from './add-person/add-person.component';
     FormsModule,
     NgReduxModule,
     BrowserAnimationsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatRadioModule
   ],
   providers: [
     PeopleService
