@@ -7,18 +7,30 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { PeopleComponent } from './people/people.component';
 import { HttpModule } from '@angular/http';
-import {NgRedux,NgReduxModule} from '@angular-redux/store'
+import {NgRedux,NgReduxModule} from '@angular-redux/store';
+import { PeopleDashboardComponent } from './people-dashboard/people-dashboard.component'
+import {MatDialogModule} from '@angular/material/dialog';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
+import { AddPersonComponent } from './add-person/add-person.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    PeopleComponent
+    PeopleComponent,
+    PeopleDashboardComponent,
+    AddPersonComponent
+  ],
+  entryComponents: [
+    AddPersonComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
     FormsModule,
-    NgReduxModule
+    NgReduxModule,
+    BrowserAnimationsModule,
+    MatDialogModule
   ],
   providers: [
     PeopleService

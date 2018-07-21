@@ -1,4 +1,9 @@
-<div style="margin:20px">
+<div style="margin:20px"> 
+
+    <button class="btn btn-primary" (click)="openAddPersonDialog()">Add person</button>
+    <br/>
+    <hr style="width:100px"/>
+    <br/>
     <ul>
         
           <li *ngFor="let person of peopleArray; let i = index"> 
@@ -15,14 +20,7 @@
         
 		<div *ngIf="peopleArray == 0">
           <h5>No people found in the database.</h5>
-        </div>
+    </div>
 
-        <br/>
-        <hr/>
-        <h4>Add a new person: </h4>
-        Name : <input [(ngModel)]="newPerson.name" class="form-control"/>
-        Mail : <input [(ngModel)]="newPerson.mail" class="form-control"/>
-        Address : <input [(ngModel)]="newPerson.address" class="form-control"/>
-        
-        <button class="btn btn-primary" (click)="addPerson()">Add person</button>
+  
 </div>

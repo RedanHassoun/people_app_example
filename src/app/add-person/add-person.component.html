@@ -1,0 +1,11 @@
+<h4>Add a new person: </h4>
+Name : <input [(ngModel)]="newPerson.name" class="form-control"/>
+Mail : <input [(ngModel)]="newPerson.mail" class="form-control"/>
+Address : <input [(ngModel)]="newPerson.address" class="form-control"/>
+<br/>
+<hr/>
+<button id="cancel-btn" class="btn btn-default" 
+        mat-dialog-close>Cancel</button>
+        
+<button id="add-person-btn" class="btn btn-primary"
+        (click)="addPerson()">Add person</button>

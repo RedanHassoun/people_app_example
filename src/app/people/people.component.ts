@@ -4,6 +4,8 @@ import { NgRedux } from '@angular-redux/store';
 import { Person } from 'src/app/model/person';
 import { PeopleService } from './../services/people.service';
 import { Component, OnInit } from '@angular/core'; 
+import { MatDialog } from '@angular/material/dialog';
+import { AddPersonComponent } from 'src/app/add-person/add-person.component';
 
 @Component({
   selector: 'app-people',
@@ -15,7 +17,8 @@ export class PeopleComponent implements OnInit {
   newPerson:Person = new Person()
 
   constructor(private peopleService:PeopleService,
-              private ngRedux:NgRedux<IAppState>) {
+              private ngRedux:NgRedux<IAppState>,
+              private dialog:MatDialog) {
       ngRedux.subscribe(()=>{
         var currState = ngRedux.getState()
         this.peopleArray = currState.peopleArray
@@ -36,9 +39,9 @@ export class PeopleComponent implements OnInit {
  
   }
 
-  private addToPeople(person){
-    this.ngRedux.dispatch({type:ADD_TO_PEOPLE,person:person}) 
-    this.newPerson.reset()
+  openAddPersonDialog(){
+    console.log('Opening dialog')
+    this.dialog.open(AddPersonComponent)
   }
  
   private loadPeople(people){ 
@@ -59,25 +62,5 @@ export class PeopleComponent implements OnInit {
                           console.log('An error occurred: '+error)
                           alert('An error occurred while connecting to server')
                         })
-  }
- 
-  addPerson(){
-    if(this.newPerson.isEmpty()){
-      alert("Missing person input")
-    }else{ 
-      this.peopleService.createPerson(this.newPerson)
-                          .subscribe((response)=>{
-                            console.log('Create person response: '+JSON.stringify(response))
-                            this.addToPeople(response.json()) 
-                            this.newPerson.reset()
-                          },
-                          (error)=>{
-                            console.log('An error occurred: '+error)
-                            this.newPerson.reset()
-                            alert('An error occurred while connecting to server')
-                          })
-    }
-
-
   }
 }
