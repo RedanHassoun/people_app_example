@@ -3,9 +3,10 @@ import { IAppState } from './../app-store/store';
 import { NgRedux } from '@angular-redux/store';
 import { Person } from 'src/app/model/person';
 import { PeopleService } from './../services/people.service';
-import { Component, OnInit } from '@angular/core'; 
+import { Component, OnInit,ViewChild } from '@angular/core'; 
 import { MatDialog } from '@angular/material/dialog';
 import { AddPersonComponent } from 'src/app/add-person/add-person.component';
+import {MatTable} from '@angular/material';
 
 @Component({
   selector: 'app-people',
@@ -14,6 +15,8 @@ import { AddPersonComponent } from 'src/app/add-person/add-person.component';
 })
 export class PeopleComponent implements OnInit {
   peopleArray:Array<Person> = []  
+  @ViewChild(MatTable) table: MatTable<any>;
+  columnsToDisplay = ['name' , 'mail','address','gender','delete']; 
 
   constructor(private peopleService:PeopleService,
               private ngRedux:NgRedux<IAppState>,
@@ -21,6 +24,9 @@ export class PeopleComponent implements OnInit {
       ngRedux.subscribe(()=>{
         var currState = ngRedux.getState()
         this.peopleArray = currState.peopleArray
+        console.log('Updating table')
+        this.table.renderRows()
+        console.log('Table updated')
       })
   }
 

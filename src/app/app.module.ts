@@ -13,6 +13,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import { AddPersonComponent } from './add-person/add-person.component';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {MatRadioModule} from '@angular/material/radio';
     NgReduxModule,
     BrowserAnimationsModule,
     MatDialogModule,
-    MatRadioModule
+    MatRadioModule,
+    MatTableModule
   ],
   providers: [
     PeopleService

@@ -4,7 +4,7 @@
     <br/>
     <hr style="width:100px"/>
     <br/>
-    <ul>
+    <!-- <ul>
         
           <li *ngFor="let person of peopleArray; let i = index"> 
             {{person.name}} 
@@ -17,7 +17,41 @@
               Gender: {{person.gender}}
             </div>
           </li>
-        </ul>
+    </ul> -->
+
+
+    <table *ngIf="!(peopleArray == 0)" mat-table [dataSource]="peopleArray"  class="mat-elevation-z8">
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name  </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="mail">
+            <th mat-header-cell *matHeaderCellDef> Mail </th>
+            <td mat-cell *matCellDef="let element"> {{element.mail}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="address">
+            <th mat-header-cell *matHeaderCellDef> Address </th>
+            <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="gender">
+            <th mat-header-cell *matHeaderCellDef> Gender </th>
+            <td mat-cell *matCellDef="let element"> {{element.gender}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td mat-cell *matCellDef="let person">
+              <button class="btn btn-default" type="button" (click)="deletePerson(person)">Remove</button>
+            </td>
+         </ng-container>
+        
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
+    </table>
         
 		<div *ngIf="peopleArray == 0">
           <h5>No people found in the database.</h5>
