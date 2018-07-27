@@ -23,10 +23,10 @@ export class PeopleComponent implements OnInit {
               private dialog:MatDialog) {
       ngRedux.subscribe(()=>{
         var currState = ngRedux.getState()
-        this.peopleArray = currState.peopleArray
-        console.log('Updating table')
-        this.table.renderRows()
-        console.log('Table updated')
+        this.peopleArray = currState.peopleArray 
+        if(this.table != undefined){
+          this.table.renderRows()
+        } 
       })
   }
 
@@ -46,6 +46,10 @@ export class PeopleComponent implements OnInit {
   openAddPersonDialog(){
     console.log('Opening dialog')
     this.dialog.open(AddPersonComponent)
+                  .afterClosed()
+                  .subscribe((result)=>{
+                    this.table.renderRows()
+                  })
   }
  
   private loadPeople(people){ 

@@ -4,6 +4,7 @@
     <br/>
     <hr style="width:100px"/>
     <br/>
+
     <!-- <ul>
         
           <li *ngFor="let person of peopleArray; let i = index"> 
@@ -20,7 +21,11 @@
     </ul> -->
 
 
-    <table *ngIf="!(peopleArray == 0)" mat-table [dataSource]="peopleArray"  class="mat-elevation-z8">
+    <table 
+      *ngIf="!(peopleArray == 0)" 
+      mat-table 
+      [dataSource]="peopleArray"  
+      class="mat-elevation-z8">
 
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Name  </th>
