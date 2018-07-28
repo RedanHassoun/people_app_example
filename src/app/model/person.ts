@@ -42,6 +42,10 @@ export class Person {
         return this.gender
     }
 
+	setGender(gender){
+        this.gender = gender
+    }
+	
     json(){
         return {
             id: this.id,
@@ -64,5 +68,16 @@ export class Person {
         (this.getAddress().trim() ==="") || 
         (this.getMail().trim() ==="") || 
         (this.getGender().trim() ==="")
+    }
+	
+	static fromRequest(req):Person{ 
+        let p = new Person();
+        p.id = undefined
+        p.setName(req.body.name) 
+        p.setMail(req.body.mail)
+        p.setGender(req.body.gender)
+        p.setAddress(req.body.address)
+
+        return p 
     }
 }
