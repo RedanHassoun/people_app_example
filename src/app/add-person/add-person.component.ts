@@ -29,16 +29,23 @@ export class AddPersonComponent implements OnInit {
         Validators.required,
         Validators.minLength(4)
       ]),
-      'mail': new FormControl(this.newPerson.mail),
+      'mail': new FormControl(this.newPerson.mail,[
+                                  Validators.required,
+                                  Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')]),
       'address': new FormControl(this.newPerson.address, 
                                   Validators.required),
-      'gender': new FormControl()
+      'gender': new FormControl(this.newPerson.gender,
+                                  Validators.required)
     }); 
   }
 
+  get name() { return this.addPersonForm.get('name'); }
+  get mail() { return this.addPersonForm.get('mail'); }
+  get address() { return this.addPersonForm.get('address'); }
+
   addPerson(){
     if(this.newPerson.isEmpty()){
-      alert("Missing person input")
+      alert("Missing person input") // TODO : remove this if statement
     }else{  
       console.log('Running service to add : '+JSON.stringify(this.newPerson))
       this.peopleService.createPerson(this.newPerson)
