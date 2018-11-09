@@ -5,6 +5,7 @@ import { Person } from './../model/person';
 import { Component, OnInit } from '@angular/core';
 import { NgRedux } from '@angular-redux/store';
 import { MatDialogRef } from '@angular/material/dialog';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-person',
@@ -13,6 +14,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class AddPersonComponent implements OnInit {
   newPerson:Person
+  private addPersonForm:FormGroup
 
   constructor(private peopleService:PeopleService,
               private ngRedux:NgRedux<IAppState>,
@@ -22,6 +24,16 @@ export class AddPersonComponent implements OnInit {
   ngOnInit() {
     this.newPerson = new Person()
     this.newPerson.reset()
+    this.addPersonForm = new FormGroup({
+      'name': new FormControl(this.newPerson.name, [
+        Validators.required,
+        Validators.minLength(4)
+      ]),
+      'mail': new FormControl(this.newPerson.mail),
+      'address': new FormControl(this.newPerson.address, 
+                                  Validators.required),
+      'gender': new FormControl()
+    }); 
   }
 
   addPerson(){
