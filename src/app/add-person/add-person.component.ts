@@ -32,21 +32,21 @@ export class AddPersonComponent implements OnInit {
     }else{  
       console.log('Running service to add : '+JSON.stringify(this.newPerson))
       this.peopleService.create(this.newPerson)
-                          .subscribe((response)=>{
-                            console.log('Create person response: '+JSON.stringify(response))
-                            this.addToPeople(response.json()) 
-                            this.newPerson.reset()
-                          },
-                          (error:AppError)=>{
-                            
-                            if(error instanceof BadInputError){
-                              let msg:string = 'Bad input'
-                              console.log(msg)
-                              alert(msg) 
-                              this.newPerson.reset() 
-                            }else
-                              throw error
-                          })
+                  .subscribe((personFromServer)=>{
+                    console.log('Create person response: '+personFromServer)
+                    this.addToPeople(personFromServer) 
+                    this.newPerson.reset()
+                  },
+                  (error:AppError)=>{
+                    
+                    if(error instanceof BadInputError){
+                      let msg:string = 'Bad input'
+                      console.log(msg)
+                      alert(msg) 
+                      this.newPerson.reset() 
+                    }else
+                      throw error
+                  })
     } 
   }
 

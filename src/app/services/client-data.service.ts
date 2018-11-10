@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'; 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
 import 'rxjs/add/Observable/throw';
 import { Http } from '@angular/http';
 import { BadInputError } from './../common/bad-input-error';
@@ -17,16 +17,19 @@ export class ClientDataService {
 
   getAll(){
     return this.http.get(this.url)
+                .map(response => response.json())
                 .catch(this.handleError)
   }
 
   delete(id:string){ 
     return this.http.delete(this.url + id)
+                .map(response => response.json())
                 .catch(this.handleError)
   }
 
   create(resource){ 
     return this.http.post(this.url,resource.json())
+              .map(response => response.json())
               .catch(this.handleError)
   }
 

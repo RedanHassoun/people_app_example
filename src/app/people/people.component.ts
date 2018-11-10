@@ -34,9 +34,9 @@ export class PeopleComponent implements OnInit {
 
   ngOnInit() { 
     this.peopleService.getAll()
-                        .subscribe((response)=>{
-                          console.log('ngOnInit | '+response.json())
-                          this.loadPeople( response.json())
+                        .subscribe((people)=>{
+                          console.log('ngOnInit | '+people)
+                          this.loadPeople(people)
                         }) 
   }
 
@@ -60,7 +60,7 @@ export class PeopleComponent implements OnInit {
   deletePerson(personToDelete){
     this.peopleService.delete(personToDelete)
                         .subscribe( (response) => {
-                          console.log('Deleted : '+JSON.stringify(personToDelete))
+                          console.log('Deleted : '+personToDelete)
                           this.removeFromPeople(personToDelete) 
                         },
                         (error:AppError)=>{
