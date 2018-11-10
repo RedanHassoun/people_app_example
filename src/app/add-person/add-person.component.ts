@@ -1,3 +1,5 @@
+import { BadInputError } from './../common/bad-input-error';
+import { AppError } from './../common/app-error';
 import { IAppState } from './../app-store/store';
 import { ADD_TO_PEOPLE } from './../app-store/actions';
 import { PeopleService } from './../services/people.service';
@@ -35,10 +37,15 @@ export class AddPersonComponent implements OnInit {
                             this.addToPeople(response.json()) 
                             this.newPerson.reset()
                           },
-                          (error)=>{
-                            console.log('An error occurred: '+error)
-                            this.newPerson.reset()
-                            alert('An error occurred while connecting to server')
+                          (error:AppError)=>{
+                            
+                            if(error instanceof BadInputError){
+                              let msg:string = 'Bad input'
+                              console.log(msg)
+                              alert(msg) 
+                              this.newPerson.reset() 
+                            }else
+                              throw error
                           })
     } 
   }

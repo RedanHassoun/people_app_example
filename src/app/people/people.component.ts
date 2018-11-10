@@ -1,3 +1,5 @@
+import { NotFoundError } from './../common/not-found-error';
+import { AppError } from './../common/app-error';
 import { FETCH_PEOPLE_SUCCESS, ADD_TO_PEOPLE, REMOVE_FROM_PEOPLE } from './../app-store/actions';
 import { IAppState } from './../app-store/store';
 import { NgRedux } from '@angular-redux/store';
@@ -17,7 +19,7 @@ export class PeopleComponent implements OnInit {
   peopleArray:Array<Person> = []  
   @ViewChild(MatTable) table: MatTable<any>;
   columnsToDisplay = ['name' , 'mail','address','gender','delete']; 
-
+  
   constructor(private peopleService:PeopleService,
               private ngRedux:NgRedux<IAppState>,
               private dialog:MatDialog) {
@@ -35,12 +37,7 @@ export class PeopleComponent implements OnInit {
                         .subscribe((response)=>{
                           console.log('ngOnInit | '+response.json())
                           this.loadPeople( response.json())
-                        },
-                      (error)=>{
-                        console.log('An error occurred: '+error)
-                        alert('An error occurred while connecting to server')
-                      }) 
- 
+                        }) 
   }
 
   openAddPersonDialog(){
@@ -66,9 +63,12 @@ export class PeopleComponent implements OnInit {
                           console.log('Deleted : '+JSON.stringify(personToDelete))
                           this.removeFromPeople(personToDelete) 
                         },
-                        (error)=>{
-                          console.log('An error occurred: '+error)
-                          alert('An error occurred while connecting to server')
+                        (error:AppError)=>{
+                          if(error instanceof NotFoundError){
+                            console.log('Person not found : '+JSON.stringify(personToDelete));
+                            alert('This person is already deleted')
+                          }else
+                            throw error // The error will be handled by Angular
                         })
   }
 }
