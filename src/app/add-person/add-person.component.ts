@@ -31,7 +31,7 @@ export class AddPersonComponent implements OnInit {
       alert("Missing person input")
     }else{  
       console.log('Running service to add : '+JSON.stringify(this.newPerson))
-      this.peopleService.createPerson(this.newPerson)
+      this.peopleService.create(this.newPerson)
                           .subscribe((response)=>{
                             console.log('Create person response: '+JSON.stringify(response))
                             this.addToPeople(response.json()) 
