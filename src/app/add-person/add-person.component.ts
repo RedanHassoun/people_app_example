@@ -1,3 +1,5 @@
+import { BadInputError } from './../common/bad-input-error';
+import { AppError } from './../common/app-error';
 import { IAppState } from './../app-store/store';
 import { ADD_TO_PEOPLE } from './../app-store/actions';
 import { PeopleService } from './../services/people.service';
@@ -29,17 +31,22 @@ export class AddPersonComponent implements OnInit {
       alert("Missing person input")
     }else{  
       console.log('Running service to add : '+JSON.stringify(this.newPerson))
-      this.peopleService.createPerson(this.newPerson)
-                          .subscribe((response)=>{
-                            console.log('Create person response: '+JSON.stringify(response))
-                            this.addToPeople(response.json()) 
-                            this.newPerson.reset()
-                          },
-                          (error)=>{
-                            console.log('An error occurred: '+error)
-                            this.newPerson.reset()
-                            alert('An error occurred while connecting to server')
-                          })
+      this.peopleService.create(this.newPerson)
+                  .subscribe((personFromServer)=>{
+                    console.log('Create person response: '+personFromServer)
+                    this.addToPeople(personFromServer) 
+                    this.newPerson.reset()
+                  },
+                  (error:AppError)=>{
+                    
+                    if(error instanceof BadInputError){
+                      let msg:string = 'Bad input'
+                      console.log(msg)
+                      alert(msg) 
+                      this.newPerson.reset() 
+                    }else
+                      throw error
+                  })
     } 
   }
 

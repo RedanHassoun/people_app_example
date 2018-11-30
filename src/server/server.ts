@@ -18,11 +18,11 @@ class ServerApp{
     
     this.peopleService.initPeople()
     
-    this.app.get('/api/getAllPeople', (req,res)=>{
+    this.app.get('/api/peopleapp', (req,res)=>{
       res.send(this.peopleService.getAllPeople())
     })
     
-    this.app.post('/api/createPerson', (req,res)=>{
+    this.app.post('/api/peopleapp', (req,res)=>{
         let personToAdd = {id:undefined,
         name:req.body.name,
         mail:req.body.mail,
@@ -32,7 +32,7 @@ class ServerApp{
         res.send(this.peopleService.createPerson(personToAdd));
     })
     
-    this.app.delete('/api/deletePerson/:id', (req,res)=>{
+    this.app.delete('/api/peopleapp/:id', (req,res)=>{
       console.log('Deleting person id:'+req.params.id);
       res.send(this.peopleService.deletePerson(req.params.id))
     })
