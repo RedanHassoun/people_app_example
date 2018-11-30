@@ -1,3 +1,4 @@
+import {RouterModule} from '@angular/router';
 import { IAppState, rootReducer, INITIAL_STATE } from './app-store/store';
 import { Http } from '@angular/http';
 import { PeopleService } from './services/people.service';
@@ -14,13 +15,20 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import { AddPersonComponent } from './add-person/add-person.component';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatTableModule} from '@angular/material/table';
+import { NavbarComponent } from './navbar/navbar.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { ProfileComponent } from './profile/profile.component'; 
+
 
 @NgModule({
   declarations: [
     AppComponent,
     PeopleComponent,
     PeopleDashboardComponent,
-    AddPersonComponent
+    AddPersonComponent,
+    NavbarComponent,
+    NotFoundComponent,
+    ProfileComponent
   ],
   entryComponents: [
     AddPersonComponent
@@ -33,7 +41,25 @@ import {MatTableModule} from '@angular/material/table';
     BrowserAnimationsModule,
     MatDialogModule,
     MatRadioModule,
-    MatTableModule
+    MatTableModule,
+    RouterModule.forRoot([
+      {
+        path: 'people/:username/:id', 
+        component: ProfileComponent
+      },
+      {
+        path: 'people', 
+        component: PeopleComponent
+      },
+      {
+        path: 'dashboard', 
+        component: PeopleDashboardComponent
+      },
+      {
+        path: '**', 
+        component: NotFoundComponent
+      }
+    ])
   ],
   providers: [
     PeopleService
