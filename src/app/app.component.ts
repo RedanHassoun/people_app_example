@@ -1,3 +1,4 @@
+import { AuthenticationService } from './services/authentication.service';
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -7,6 +8,5 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
-
+  title = 'app'; 
 }

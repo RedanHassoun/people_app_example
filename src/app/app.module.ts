@@ -19,6 +19,7 @@ import {MatTableModule} from '@angular/material/table';
 import { NavbarComponent } from './navbar/navbar.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ProfileComponent } from './profile/profile.component'; 
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { ProfileComponent } from './profile/profile.component';
     AddPersonComponent,
     NavbarComponent,
     NotFoundComponent,
-    ProfileComponent
+    ProfileComponent,
+    LoginComponent
   ],
   entryComponents: [
     AddPersonComponent
@@ -44,6 +46,10 @@ import { ProfileComponent } from './profile/profile.component';
     MatRadioModule,
     MatTableModule,
     RouterModule.forRoot([
+      {
+        path: '', 
+        component: LoginComponent
+      },
       {
         path: 'people/:username/:id', 
         component: ProfileComponent

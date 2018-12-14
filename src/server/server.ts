@@ -2,22 +2,33 @@ import { DataService } from './data.service';
 import { Logger } from './logger';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-import * as uuidv1 from 'uuid/v1';   
- 
+import * as uuidv1 from 'uuid/v1';
+import { AuthService } from './auth.service';
+//import {CircularJSON} from 'circular-json'; 
 const SERVER_PORT:number = 8080
 
 class ServerApp{  
-  private readonly app = express()
+  private readonly app = express() 
 
   constructor(private port:number,
-              private peopleService:DataService){
+              private peopleService:DataService,
+              private authService:AuthService){
   }
  
   init(){
     this.app.use(bodyParser.json());
     
     this.peopleService.initPeople()
+
+
     
+    this.app.post('/api/authenticate', (req,res)=>{
+      let result = this.authService.authenticate(req.body.email,req.body.password)
+      Logger.log('Server result: '+result)
+
+      res.send(result)
+    })
+     
     this.app.get('/api/peopleapp', (req,res)=>{
       res.send(this.peopleService.getAllPeople())
     })
@@ -42,7 +53,8 @@ class ServerApp{
 }
 
 let serverApp:ServerApp = new ServerApp(SERVER_PORT,
-                                        new DataService()) 
+                                        new DataService(),
+                                        new AuthService()) 
 serverApp.init()
 
 

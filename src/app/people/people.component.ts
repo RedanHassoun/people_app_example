@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { AuthenticationService } from './../services/authentication.service';
 import { NotFoundError } from './../common/not-found-error';
 import { AppError } from './../common/app-error';
 import { FETCH_PEOPLE_SUCCESS, ADD_TO_PEOPLE, REMOVE_FROM_PEOPLE } from './../app-store/actions';
@@ -22,7 +24,9 @@ export class PeopleComponent implements OnInit {
   
   constructor(private peopleService:PeopleService,
               private ngRedux:NgRedux<IAppState>,
-              private dialog:MatDialog) {
+              private dialog:MatDialog,
+              private authenticationService:AuthenticationService,
+              private router: Router) {
       ngRedux.subscribe(()=>{
         var currState = ngRedux.getState()
         this.peopleArray = currState.peopleArray 
@@ -70,5 +74,10 @@ export class PeopleComponent implements OnInit {
                           }else
                             throw error // The error will be handled by Angular
                         })
+  }
+
+  logout(){
+    this.authenticationService.logout()
+    this.router.navigate(['/']);
   }
 }

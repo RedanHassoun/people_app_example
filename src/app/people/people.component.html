@@ -1,5 +1,7 @@
+<p *ngIf="authenticationService.isLoggedIn()">
+    Hello {{authenticationService.currentUser.name}}
+</p>
 <div style="margin:20px"> 
-
     <button class="btn btn-primary" (click)="openAddPersonDialog()">Add person</button>
     <br/>
     <hr style="width:100px"/>
@@ -65,3 +67,5 @@
 
   
 </div>
+
+<button (click)="logout()">Logout</button>
