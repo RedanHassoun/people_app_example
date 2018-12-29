@@ -1,5 +1,5 @@
-<h1 style="margin:10px">People app</h1> <br/>
-<app-navbar></app-navbar>
+<h1 style="margin:10px">People app</h1> <br/> 
+<app-navbar *ngIf="isLoggedIn()"></app-navbar>
 <router-outlet></router-outlet>
 <!--
 <app-people-dashboard id="people_dashboard"></app-people-dashboard>

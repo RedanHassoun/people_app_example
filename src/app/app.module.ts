@@ -1,3 +1,4 @@
+import { AuthGaurd } from './services/auth-gaurd.service';
 import {RouterModule} from '@angular/router';
 import { AppErrorHandler } from './common/app-error-handler';
 import { IAppState, rootReducer, INITIAL_STATE } from './app-store/store';
@@ -19,7 +20,8 @@ import {MatTableModule} from '@angular/material/table';
 import { NavbarComponent } from './navbar/navbar.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ProfileComponent } from './profile/profile.component'; 
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './login/login.component'; 
+import { AppConsts } from './common/app-consts';
 
 
 @NgModule({
@@ -47,16 +49,17 @@ import { LoginComponent } from './login/login.component';
     MatTableModule,
     RouterModule.forRoot([
       {
-        path: '', 
+        path: AppConsts.ROUTE_LOGIN,
         component: LoginComponent
       },
       {
-        path: 'people/:username/:id', 
+        path: 'people/:username/:id',
         component: ProfileComponent
       },
       {
         path: 'people', 
-        component: PeopleComponent
+        component: PeopleComponent,
+        canActivate: [AuthGaurd]
       },
       {
         path: 'dashboard', 
@@ -70,6 +73,7 @@ import { LoginComponent } from './login/login.component';
   ],
   providers: [
     PeopleService,
+    AuthGaurd,
     { provide: ErrorHandler , useClass: AppErrorHandler}
   ],
   bootstrap: [AppComponent]

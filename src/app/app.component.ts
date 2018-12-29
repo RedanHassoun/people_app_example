@@ -9,4 +9,10 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class AppComponent {
   title = 'app'; 
+  constructor(private authService:AuthenticationService){
+  }
+
+  isLoggedIn(){
+    return this.authService.isLoggedIn()
+  }
 }

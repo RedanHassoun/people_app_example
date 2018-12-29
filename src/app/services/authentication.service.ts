@@ -1,7 +1,7 @@
-import { KEY_USER_TOKEN } from './../common/app-consts';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import {JwtHelper} from 'angular2-jwt'
+import {JwtHelper} from 'angular2-jwt';
+import { AppConsts } from '../common/app-consts';
 
 @Injectable({
   providedIn: 'root'
@@ -17,23 +17,24 @@ export class AuthenticationService {
    }
  
    logout() {
-     localStorage.removeItem(KEY_USER_TOKEN)
+     localStorage.removeItem(AppConsts.KEY_USER_TOKEN)
    }
  
-   isLoggedIn() { 
+   isLoggedIn() {
      let jwtHelper = new JwtHelper()
-     let token = localStorage.getItem(KEY_USER_TOKEN)
-     if(token){
-       let expirationDate = jwtHelper.getTokenExpirationDate(token)
-       let isExpired = jwtHelper.isTokenExpired(token)
-       if(!isExpired)
-        return true
+     let token = localStorage.getItem(AppConsts.KEY_USER_TOKEN)
+     if(token && token !== 'undefined'){
+      return true
+      //  let expirationDate = jwtHelper.getTokenExpirationDate(token)
+      //  let isExpired = jwtHelper.isTokenExpired(token)
+      //  if(!isExpired)
+      //   return true TODO handle expiration 
      }
      return false;
    }
 
    get currentUser(){
-    let token = localStorage.getItem(KEY_USER_TOKEN)
+    let token = localStorage.getItem(AppConsts.KEY_USER_TOKEN)
     if(!token) 
       return null;
     return new JwtHelper().decodeToken(token)
