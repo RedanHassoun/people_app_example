@@ -1,7 +1,7 @@
 import { AuthenticationService } from './../services/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { KEY_USER_TOKEN } from '../common/app-consts';
+import { AppConsts } from '../common/app-consts';
 
 @Component({
   selector: 'login',
@@ -17,17 +17,17 @@ export class LoginComponent implements OnInit {
     private authService: AuthenticationService) { }
 
   signIn(credentials) {
-    let obj = {
+    const obj = {
       email:credentials.email,
       password:credentials.password
     }
     this.authService.login(obj)
       .subscribe(response => { 
-        let result = response.json()
+        const result = response.json()
         console.log('REDAN: result='+JSON.stringify(result))
         if (result && result.status === 200){
-          localStorage.setItem(KEY_USER_TOKEN,result.body);
-          console.log(localStorage.getItem(KEY_USER_TOKEN))
+          localStorage.setItem(AppConsts.KEY_USER_TOKEN,result.token);
+          console.log(localStorage.getItem(AppConsts.KEY_USER_TOKEN))
           this.router.navigate(['/people']);
         } 
         else  
@@ -35,7 +35,9 @@ export class LoginComponent implements OnInit {
       });
   }
 
-  ngOnInit(){
-
+  ngOnInit(){ 
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/people']);
+    }
   }
 }
