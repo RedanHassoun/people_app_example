@@ -24,6 +24,7 @@
 
     <div *ngIf="!(peopleArray == 0)" name="peopleContent">
         <table  
+            @fade
             mat-table 
             [dataSource]="peopleArray"  
             class="mat-elevation-z8">
@@ -56,7 +57,7 @@
                </ng-container>
               
               <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-              <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
+              <tr @fade mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
           </table>
     </div>
    
