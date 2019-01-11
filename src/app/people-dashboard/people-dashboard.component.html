@@ -4,7 +4,8 @@
       Last Update: {{ lastUpdate | date:'mediumTime' }}
   </p>
   <p>
-      Number of people : {{numOfPeople}} <br/>
-      {{numOfMales}} are males, and {{(numOfPeople - numOfMales)}} are females
+      Number of people : {{ (peopleArray$ | async).length }} <br/>
+      {{getNumberOfMales(peopleArray$ | async)}} are males, 
+      and {{getNumberOfFemales(peopleArray$ | async)}} are females
   </p>
 </div>

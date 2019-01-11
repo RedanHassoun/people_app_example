@@ -7,7 +7,7 @@ import { IAppState } from './../app-store/store';
 import { NgRedux } from '@angular-redux/store';
 import { Person } from 'src/app/model/person';
 import { PeopleService } from './../services/people.service';
-import { Component, OnInit,ViewChild } from '@angular/core'; 
+import { Component, OnInit,ViewChild, OnDestroy } from '@angular/core'; 
 import { MatDialog } from '@angular/material/dialog';
 import { AddPersonComponent } from 'src/app/add-person/add-person.component';
 import {MatTable} from '@angular/material';
@@ -17,22 +17,21 @@ import {MatTable} from '@angular/material';
   templateUrl: './people.component.html',
   styleUrls: ['./people.component.css']
 })
-export class PeopleComponent implements OnInit {
+export class PeopleComponent implements OnInit,OnDestroy {
   peopleArray:Array<Person> = []  
   @ViewChild(MatTable) table: MatTable<any>;
-  columnsToDisplay = ['name' , 'mail','address','gender','delete']; 
+  columnsToDisplay = ['name' , 'mail','address','gender','delete'];
+  storeUnsubscribe;
   
   constructor(private peopleService:PeopleService,
               private ngRedux:NgRedux<IAppState>,
               private dialog:MatDialog,
               private authenticationService:AuthenticationService,
               private router: Router) {
-      ngRedux.subscribe(()=>{
+      this.storeUnsubscribe = ngRedux.subscribe(()=>{
         var currState = ngRedux.getState()
-        this.peopleArray = currState.peopleArray 
-        if(this.table != undefined){
-          this.table.renderRows()
-        } 
+        this.peopleArray = currState.peopleArray
+        this.refreshTable()
       })
   }
 
@@ -42,6 +41,17 @@ export class PeopleComponent implements OnInit {
                           console.log('ngOnInit | '+people)
                           this.loadPeople(people)
                         }) 
+  }
+
+  ngOnDestroy(): void { 
+    if(this.storeUnsubscribe)
+      this.storeUnsubscribe()
+  }
+
+  private refreshTable(){
+    if(this.table != undefined){
+      this.table.renderRows()
+    } 
   }
 
   openAddPersonDialog(){
@@ -62,9 +72,8 @@ export class PeopleComponent implements OnInit {
   }
 
   deletePerson(personToDelete){
-    this.peopleService.delete(personToDelete)
+    this.peopleService.delete(personToDelete.id)
                         .subscribe( (response) => {
-                          console.log('Deleted : '+personToDelete)
                           this.removeFromPeople(personToDelete) 
                         },
                         (error:AppError)=>{

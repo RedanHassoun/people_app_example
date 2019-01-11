@@ -1,6 +1,7 @@
 import { IAppState } from './../app-store/store';
-import { NgRedux } from '@angular-redux/store';
+import { NgRedux, select } from '@angular-redux/store';
 import { Component, OnInit } from '@angular/core';
+import { Person } from '../model/person';
 
 @Component({
   selector: 'app-people-dashboard',
@@ -8,23 +9,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./people-dashboard.component.css']
 })
 export class PeopleDashboardComponent implements OnInit {
-  private numOfPeople:number
-  private numOfMales:number
-  private lastUpdate:Date
+  @select('peopleArray') peopleArray$
 
   constructor(private ngRedux:NgRedux<IAppState>) {
   }
+ 
 
-  ngOnInit() {
-    this.ngRedux.subscribe(()=>{
-      var stateFromStore = this.ngRedux.getState()
-      console.log('stateFromStore='+stateFromStore)
-      var peopleArray =  stateFromStore.peopleArray
-      console.log('peopleArray='+peopleArray)
-      this.numOfPeople = peopleArray.length
-      this.numOfMales = peopleArray.filter(x=> x.gender === 'Male').length
-      this.lastUpdate = new Date()
-    })
+  private getNumberOfMales(peopleArray:Array<Person>){
+    return peopleArray.filter(x=> x.gender === 'Male').length
   }
 
+  private getNumberOfFemales(peopleArray:Array<Person>){
+    return peopleArray.length - this.getNumberOfMales(peopleArray)
+  }
 }
