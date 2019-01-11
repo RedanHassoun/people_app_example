@@ -8,7 +8,7 @@ import { Person } from '../model/person';
   templateUrl: './people-dashboard.component.html',
   styleUrls: ['./people-dashboard.component.css']
 })
-export class PeopleDashboardComponent implements OnInit {
+export class PeopleDashboardComponent{
   @select('peopleArray') peopleArray$
 
   constructor(private ngRedux:NgRedux<IAppState>) {
