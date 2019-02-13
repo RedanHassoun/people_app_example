@@ -1,9 +1,11 @@
+import { Repository } from './repository';
 import { DataService } from './data.service'; 
 import { Logger } from './logger';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as uuidv1 from 'uuid/v1';
 import { AuthService } from './auth.service';
+import  {MongoClient} from 'mongodb';
 //import {CircularJSON} from 'circular-json'; 
 const SERVER_PORT:number = 8080
 
@@ -52,10 +54,14 @@ class ServerApp{
   }
 }
 
+let repo:Repository = new Repository()
+repo.initDBConnection()
 let serverApp:ServerApp = new ServerApp(SERVER_PORT,
-                                        new DataService(),
+                                        new DataService(repo),
                                         new AuthService()) 
-serverApp.init()
+
+serverApp.init();
+
 
 
 

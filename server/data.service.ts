@@ -1,16 +1,18 @@
 import { Logger } from './logger';  
-import * as uuidv1 from 'uuid/v1'; 
+import * as uuidv1 from 'uuid/v1';
+import { Repository } from './repository';
+
  
 export class DataService {
-  private readonly peopleArray:any= [] 
+  private readonly peopleArray:any= []
 
-  constructor() {  
+  constructor(private repo:Repository) {   
   }
 
   initPeople(){
     Logger.log('Init people')
     this.peopleArray.push({id:uuidv1(),
-      name:'redan',mail:'redan@mail.com',gender:'Male',address:"Tel-Aviv"}) 
+      name:'redan',mail:'redan@mail.com',gender:'Male',address:"Tel-Aviv"});
   }
 
   getAllPeople():Array<any>{
@@ -18,11 +20,15 @@ export class DataService {
   }
 
   createPerson(person):any{ 
-    person.id = uuidv1()  
+    person.id = uuidv1()
     this.peopleArray.push(person)
-    Logger.log(JSON.stringify(person)+', added.')
-    Logger.log('Array size now is : '+this.peopleArray.length)
-    return person 
+    this.repo.save(person).then(res=>{
+      Logger.log('saved. '+JSON.stringify(res,undefined,2))
+      return person 
+    },err=>{
+      console.log('error. ',err)
+      return null
+    })
   }
 
   deletePerson(personId){

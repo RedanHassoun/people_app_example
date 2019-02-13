@@ -8,6 +8,9 @@
 # dependencies
 /node_modules
 /src/server/*.js
+/server/*.js
+/server/node_modules
+/server/playground
 /src/app/model/*.js
 
 # IDEs and editors
