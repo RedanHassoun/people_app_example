@@ -1,4 +1,4 @@
-import { Repository } from './repository';
+import { Repository } from './repo/repository';
 import { DataService } from './data.service'; 
 import { Logger } from './logger';
 import * as express from 'express';
@@ -41,7 +41,7 @@ class ServerApp{
         mail:req.body.mail,
         gender:req.body.gender,
         address:req.body.address}
-
+        
         res.send(this.peopleService.createPerson(personToAdd));
     })
     
@@ -55,7 +55,6 @@ class ServerApp{
 }
 
 let repo:Repository = new Repository()
-repo.initDBConnection()
 let serverApp:ServerApp = new ServerApp(SERVER_PORT,
                                         new DataService(repo),
                                         new AuthService()) 

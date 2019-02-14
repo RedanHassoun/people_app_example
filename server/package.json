@@ -5,16 +5,18 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsc logger.ts && tsc repository.ts && tsc data.service.ts && tsc server.ts && node server.js",
-    "node-server": "tsc logger.ts && tsc repository.ts && tsc data.service.ts && tsc server.ts && node server.js"
+    "start": "tsc logger.ts && tsc repo/sequelize.connection.ts && tsc models/person.ts && tsc repo/repository.ts && tsc data.service.ts && tsc server.ts && node server.js"
   },
   "author": "redan",
   "license": "ISC",
   "dependencies": {
+    "@types/mongoose": "^5.3.15",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "mongodb": "^3.1.13",
     "mongoose": "^5.4.11",
+    "sequelize": "^4.42.0",
+    "sqlite3": "^4.0.6",
     "uuid": "^3.3.2"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
 import { Logger } from './logger';  
 import * as uuidv1 from 'uuid/v1';
-import { Repository } from './repository';
+import { Repository } from './repo/repository';
 
  
 export class DataService {
@@ -22,13 +22,14 @@ export class DataService {
   createPerson(person):any{ 
     person.id = uuidv1()
     this.peopleArray.push(person)
-    this.repo.save(person).then(res=>{
-      Logger.log('saved. '+JSON.stringify(res,undefined,2))
-      return person 
-    },err=>{
-      console.log('error. ',err)
-      return null
-    })
+    this.repo.save(person)
+    // this.repo.save(person).then(res=>{
+    //   Logger.log('saved. '+JSON.stringify(res,undefined,2))
+    //   return person 
+    // },err=>{
+    //   console.log('error. ',err)
+    //   return null
+    // })
   }
 
   deletePerson(personId){
