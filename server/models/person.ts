@@ -6,8 +6,20 @@ export var Person = {
         primaryKey: true,
         defaultValue: Sequelize.UUIDV4
     },
-    name:Sequelize.STRING,
-    mail:Sequelize.STRING,
+    name:{
+        type: Sequelize.STRING,
+        allowNull:false,
+        validate:{
+            len: [3]
+        }
+    },
+    mail:{
+        type:Sequelize.STRING,
+        allowNull:false,
+        validate:{
+            isEmail: true
+        }
+    },
     gender:Sequelize.STRING,
     address:Sequelize.TEXT
 }

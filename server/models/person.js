@@ -7,8 +7,20 @@ exports.Person = {
         primaryKey: true,
         defaultValue: sequelize_1.Sequelize.UUIDV4
     },
-    name: sequelize_1.Sequelize.STRING,
-    mail: sequelize_1.Sequelize.STRING,
+    name: {
+        type: sequelize_1.Sequelize.STRING,
+        allowNull: false,
+        validate: {
+            len: [3]
+        }
+    },
+    mail: {
+        type: sequelize_1.Sequelize.STRING,
+        allowNull: false,
+        validate: {
+            isEmail: true
+        }
+    },
     gender: sequelize_1.Sequelize.STRING,
     address: sequelize_1.Sequelize.TEXT
 };

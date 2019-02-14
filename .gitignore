@@ -9,6 +9,8 @@
 /node_modules
 /src/server/*.js
 /server/*.js
+/server/repo/*.js
+/server/models/*.js
 /server/node_modules
 /server/playground
 /src/app/model/*.js
