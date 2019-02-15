@@ -43,8 +43,14 @@ class ServerApp{
         mail:req.body.mail,
         gender:req.body.gender,
         address:req.body.address}
-        
-        res.send(this.peopleService.createPerson(personToAdd));
+
+        this.peopleService.createPerson(personToAdd)
+              .then(res=>{
+                res.send(res)
+              })
+              .catch(e=>{
+                res.status(400).send(e)
+              })
     })
     
     this.app.delete('/api/peopleapp/:id', (req,res)=>{
