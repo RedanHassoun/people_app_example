@@ -3,10 +3,10 @@ import { DataService } from './data.service';
 import { Logger } from './logger';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-import * as uuidv1 from 'uuid/v1';
 import { AuthService } from './auth.service';
 import _ = require('lodash');
 import { PersonModel } from './repo/sequelize.connection';
+import { authenticate } from './middleware/authenticate';
 const SERVER_PORT:number = 8080
 
 class ServerApp{  
@@ -66,6 +66,21 @@ class ServerApp{
           console.error(`Can't delete person with id: ${req.params.id} `,err)
           res.status(400).send({status:'NOT_OK'}) 
         })
+    })
+    
+    this.app.get('/api/users/me',authenticate,(req,res)=>{
+      let token = req.header('x-auth')
+      PersonModel.findByToken(token)
+          .then((person)=>{
+            if(!person){
+              res.status(401).send({})
+            }
+
+            res.send(req.person)
+          })
+          .catch(e=>{
+            res.status(401).send(e)
+          })
     })
     
     this.app.listen(this.port,()=>{})

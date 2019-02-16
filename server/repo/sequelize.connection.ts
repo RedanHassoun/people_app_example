@@ -2,6 +2,7 @@ import {Sequelize} from 'sequelize';
 import { Person } from './../models/person';
 import jwt = require('jsonwebtoken');
 import _ = require('lodash');
+import {Promise} from 'es6-promise'
 
 const SECRET_KEY:string = 'ww234r432e%%$2433'
 const connection = new Sequelize('db','user','pass',{
@@ -36,6 +37,23 @@ PersonModel.prototype.toJSON = function(){
         address:user.address
     }
     return toReturn
+}
+
+PersonModel.findByToken = function(token){
+    var Person = this;
+    var decoded;
+
+    try{
+        decoded = jwt.verify(token,SECRET_KEY)
+    }catch(e){
+        return Promise.reject(e)
+    }
+
+    return Person.findOne({ where: {
+        id: decoded.id,
+        'tokens.token': token,
+        'tokens.access': 'auth'
+    }})
 }
 
 connection.sync({
