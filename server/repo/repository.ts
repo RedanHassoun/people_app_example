@@ -1,4 +1,4 @@
-import { DBConnection, PersonModel } from './sequelize.connection'; 
+import { DBConnection, PersonModel } from './sequelize.connection';
 
 export class Repository {
     constructor() {
@@ -15,11 +15,12 @@ export class Repository {
     }
 
     save(person:any){
-        return PersonModel.create({
-            name: person.name,
-            mail: person.mail,
-            gender: person.gender,
-            address: person.address
+        let personToSave = PersonModel.build(person)
+        return personToSave.save().then((p)=>{
+            p.tokens = []
+            let token = p.generateAuthToken()
+            p.tokens.push(token)
+            return p
         })
     }
 }

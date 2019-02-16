@@ -5,7 +5,8 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as uuidv1 from 'uuid/v1';
 import { AuthService } from './auth.service';
-import  {MongoClient} from 'mongodb';
+import _ = require('lodash');
+import { PersonModel } from './repo/sequelize.connection';
 const SERVER_PORT:number = 8080
 
 class ServerApp{  
@@ -38,17 +39,19 @@ class ServerApp{
     })
     
     this.app.post('/api/peopleapp', (req,res)=>{
-        let personToAdd = {id:undefined,
-        name:req.body.name,
-        mail:req.body.mail,
-        gender:req.body.gender,
-        address:req.body.address}
+        let person = _.pick(req.body, [
+          'name','mail','password','gender','address'
+        ]) 
 
-        this.peopleService.createPerson(personToAdd)
-              .then(res=>{
-                res.send(res)
+        this.peopleService.createPerson(person)
+              .then(p=>{
+                console.log('Returned JSON: '+JSON.stringify(p,undefined,2))
+                let token = _.pick(p,'tokens').tokens[0].token
+                console.log('Returned token: '+JSON.stringify(token,undefined,2))
+                res.header('x-auth',token).send(p)
               })
               .catch(e=>{
+                console.error('Error posting person',e)
                 res.status(400).send(e)
               })
     })

@@ -1,6 +1,9 @@
 import {Sequelize} from 'sequelize';
 import { Person } from './../models/person';
+import jwt = require('jsonwebtoken');
+import _ = require('lodash');
 
+const SECRET_KEY:string = 'ww234r432e%%$2433'
 const connection = new Sequelize('db','user','pass',{
     host: 'localhost',
     dialect: 'sqlite',
@@ -9,11 +12,35 @@ const connection = new Sequelize('db','user','pass',{
 }) 
 
 export var PersonModel = connection.define('Person',Person);
+PersonModel.prototype.generateAuthToken = function() {
+    var user = this;
+    var access = 'auth';
+    var token = jwt.sign({id:user.id,access},SECRET_KEY).toString();
+    //user.tokens.concat({access,token})
+    console.log('Signed: '+token)
+    user.tokens.push({token,access})
+
+    return user.save().then((x)=>{
+        console.log('save: '+JSON.stringify(x,undefined,2));
+        return token;
+    })
+};
+
+PersonModel.prototype.toJSON = function(){
+    var user = this;
+    let toReturn = {
+        id:user.id,
+        name:user.name,
+        mail:user.mail,
+        gender:user.gender,
+        address:user.address
+    }
+    return toReturn
+}
 
 connection.sync({
     logging: console.log
 })
-
 connection.authenticate()
 .then(()=>{
     console.log('Connected to DB')
