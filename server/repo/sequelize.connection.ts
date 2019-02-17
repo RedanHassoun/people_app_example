@@ -13,20 +13,17 @@ const connection = new Sequelize('db','user','pass',{
 }) 
 
 export var PersonModel = connection.define('Person',Person);
+
 PersonModel.prototype.generateAuthToken = function() {
     var user = this;
     var access = 'auth';
     var token = jwt.sign({id:user.id,access},SECRET_KEY).toString();
-    //user.tokens.concat({access,token})
-    console.log('Signed: '+token)
-    user.tokens.push({token,access})
-
-    return user.save().then((x)=>{
-        console.log('save: '+JSON.stringify(x,undefined,2));
-        return token;
-    })
-};
-
+    user.token = token
+    user.access = 'auth' 
+    console.log(`Generated token for user: ${user.name}, token=${token}`)
+    return token
+}; 
+  
 PersonModel.prototype.toJSON = function(){
     var user = this;
     let toReturn = {

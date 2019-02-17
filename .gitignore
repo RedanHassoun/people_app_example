@@ -10,6 +10,7 @@
 /src/server/*.js
 /server/*.js
 /server/repo/*.js
+/server/middleware/*.js
 /server/models/*.js
 /server/node_modules
 /server/playground

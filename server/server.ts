@@ -41,14 +41,10 @@ class ServerApp{
     this.app.post('/api/peopleapp', (req,res)=>{
         let person = _.pick(req.body, [
           'name','mail','password','gender','address'
-        ]) 
-
+        ])
         this.peopleService.createPerson(person)
               .then(p=>{
-                console.log('Returned JSON: '+JSON.stringify(p,undefined,2))
-                let token = _.pick(p,'tokens').tokens[0].token
-                console.log('Returned token: '+JSON.stringify(token,undefined,2))
-                res.header('x-auth',token).send(p)
+                res.header('x-auth', p.token).send(p)
               })
               .catch(e=>{
                 console.error('Error posting person',e)

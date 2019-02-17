@@ -1,4 +1,4 @@
-import { PersonModel } from "server/repo/sequelize.connection";
+import { PersonModel } from './../repo/sequelize.connection';
 
 export var authenticate = (req,res,next)=>{
     let token = req.header('x-auth')

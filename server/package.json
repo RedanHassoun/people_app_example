@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "tsc logger.ts && tsc repo/sequelize.connection.ts && tsc models/person.ts && tsc repo/repository.ts && tsc data.service.ts && tsc server.ts && node server.js"
+    "start": "tsc logger.ts && tsc models/person.ts && tsc repo/sequelize.connection.ts && tsc data.service.ts && tsc server.ts && node server.js"
   },
   "author": "redan",
   "license": "ISC",

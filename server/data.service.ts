@@ -12,8 +12,7 @@ export class DataService {
     return this.repo.findAll()
   }
 
-  createPerson(person):any{ 
-    person.id = uuidv1()
+  createPerson(person):any{
     return this.repo.save(person)
   }
 

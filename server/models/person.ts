@@ -28,16 +28,18 @@ export var Person = {
             len: [3]
         }
     },
-    tokens:[{
-        access:{
-            type:Sequelize.STRING,
-            allowNull:false
-        },
-        token:{
-            type:Sequelize.STRING,
-            allowNull:false
-        }
-    }],
-    gender:Sequelize.STRING,
-    address:Sequelize.TEXT
+    token:{
+        type: Sequelize.STRING,
+        allowNull:false
+    },
+    access:{
+        type:Sequelize.STRING,
+        allowNull:false
+    },
+    gender:{
+        type:Sequelize.STRING
+    },
+    address:{
+        type:Sequelize.TEXT
+    }
 }
