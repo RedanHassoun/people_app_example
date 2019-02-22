@@ -26,9 +26,9 @@ PersonModel.prototype.generateAuthToken = function() {
 }; 
 
 PersonModel.hook('beforeCreate', (person, options) => {
-    let salt = bcrypt.genSaltSync(10)
-    let hash = bcrypt.hashSync(person.password,salt)
-    person.password = hash
+    let saltRounds = 10
+    let salt = bcrypt.genSaltSync(saltRounds)
+    person.password = bcrypt.hashSync(person.password,salt)
 });
 
 PersonModel.prototype.toJSON = function(){
