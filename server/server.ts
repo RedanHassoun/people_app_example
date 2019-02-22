@@ -43,13 +43,16 @@ class ServerApp{
         ])
         this.peopleService.createPerson(person)
               .then(p=>{
+                console.log(`Person ${p.name} saved successfully`)
                 res.header('x-auth', p.token).send(p)
               })
               .catch(e=>{
+                console.error('Cannot save person',JSON.stringify(e,undefined,2))
                 console.error('Error posting person',e)
                 res.status(400).send(e)
               })
     })
+ 
     
     this.app.delete('/api/peopleapp/:id', (req,res)=>{
       console.log('Deleting person id:'+req.params.id);

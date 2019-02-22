@@ -2,6 +2,7 @@ import {Sequelize} from 'sequelize';
 import { Person } from './../models/person';
 import jwt = require('jsonwebtoken');
 import _ = require('lodash');
+import bcrypt = require('bcryptjs');
 import {Promise} from 'es6-promise'
 
 const SECRET_KEY:string = 'ww234r432e%%$2433'
@@ -23,7 +24,13 @@ PersonModel.prototype.generateAuthToken = function() {
     console.log(`Generated token for user: ${user.name}, token=${token}`)
     return token
 }; 
-  
+
+PersonModel.hook('beforeCreate', (person, options) => {
+    let salt = bcrypt.genSaltSync(10)
+    let hash = bcrypt.hashSync(person.password,salt)
+    person.password = hash
+});
+
 PersonModel.prototype.toJSON = function(){
     var user = this;
     let toReturn = {

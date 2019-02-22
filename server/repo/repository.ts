@@ -18,13 +18,5 @@ export class Repository {
         let personToSave = PersonModel.build(person);
         let token = personToSave.generateAuthToken()
         return personToSave.save()
-            .then((p)=>{
-            console.log(`Person ${p.name} saved successfully`)
-            return p
-        })
-        .catch(e=>{
-            console.error('Cannot save person',JSON.stringify(e,undefined,2))
-            return e
-        })
     }
 }
