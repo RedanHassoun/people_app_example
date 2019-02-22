@@ -43,13 +43,15 @@ PersonModel.findByToken = function(token){
     try{
         decoded = jwt.verify(token,SECRET_KEY)
     }catch(e){
+        console.error(`An error occurred while verifying token: ${token}`)
         return Promise.reject(e)
     }
+    
 
     return Person.findOne({ where: {
         id: decoded.id,
-        'tokens.token': token,
-        'tokens.access': 'auth'
+        token: token,
+        access: 'auth'
     }})
 }
 
