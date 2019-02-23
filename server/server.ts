@@ -94,6 +94,20 @@ class ServerApp{
           })
     })
     
+
+    this.app.delete('/api/users/me/token',authenticate, (req,res)=>{
+      let token = req.header('x-auth')
+      this.peopleService.removeTokenForUser(token)
+            .then((p)=>{
+              res.status(200).send()
+            })
+            .catch(e=>{
+              console.error('An error occurred while deleting the token:',token)
+              console.error(JSON.stringify(e))
+              res.status(400).send(e)
+            })
+    });
+
     this.app.listen(this.port,()=>{})
   }
 }

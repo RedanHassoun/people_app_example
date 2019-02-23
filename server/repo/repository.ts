@@ -33,4 +33,8 @@ export class Repository {
             return Promise.reject(e)
         })
     }
+
+    removeTokenForUser(token:any){
+        return PersonModel.removeToken(token)
+    }
 }

@@ -25,6 +25,19 @@ PersonModel.prototype.generateAuthToken = function() {
     return token
 }; 
 
+PersonModel.removeToken = function(token) {
+    console.log('removing by token:',token)
+    return PersonModel.findByToken(token)
+        .then(p=>{
+            console.log('setting token to empty string')
+            return p.update({token:''})
+        })
+        .catch(e=>{
+            console.error('An error occurred while removing token:',token)
+            return Promise.reject(e)
+        })
+};
+
 PersonModel.hook('beforeCreate', (person, options) => {
     let saltRounds = 10
     let salt = bcrypt.genSaltSync(saltRounds)

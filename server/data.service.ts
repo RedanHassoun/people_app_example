@@ -23,4 +23,8 @@ export class DataService {
   findPersonByCredentials(mail,password){
     return this.repo.findPersonByCredentials(mail,password)
   }
+
+  removeTokenForUser(token){
+    return this.repo.removeTokenForUser(token)
+  }
 }
