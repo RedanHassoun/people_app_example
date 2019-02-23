@@ -19,4 +19,8 @@ export class DataService {
   deletePerson(personId){
     return this.repo.delete(personId)
   }
+
+  findPersonByCredentials(mail,password){
+    return this.repo.findPersonByCredentials(mail,password)
+  }
 }

@@ -6,7 +6,7 @@ import * as bodyParser from 'body-parser';
 import { AuthService } from './auth.service';
 import _ = require('lodash');
 import { authenticate } from './middleware/authenticate';
-const SERVER_PORT:number = 8080
+const SERVER_PORT:number = 3000
 
 class ServerApp{  
   private readonly app = express() 
@@ -68,6 +68,30 @@ class ServerApp{
     
     this.app.get('/api/users/me',authenticate,(req,res)=>{
       res.send(req.person)
+    })
+
+    this.app.post('/api/users/login', (req,res)=>{
+      let person = _.pick(req.body, [
+        'mail','password'
+      ])
+
+      if(!person.mail || !person.password){
+        res.status(400).send({message:"mail and password should be specified"})
+      }
+
+      this.peopleService.findPersonByCredentials(person.mail, person.password)
+          .then(p=>{
+            let token = p.token
+            if(!token){
+              let msg = `An error occurred while generating token for ${person.mail}`
+              console.log(msg)
+              res.status(500).send({message:msg})
+            }
+            res.header('x-auth', token).send(p)
+          })
+          .catch(e=>{
+            res.status(400).send(e)
+          })
     })
     
     this.app.listen(this.port,()=>{})

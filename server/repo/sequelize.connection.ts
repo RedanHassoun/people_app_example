@@ -43,6 +43,27 @@ PersonModel.prototype.toJSON = function(){
     return toReturn
 }
 
+PersonModel.findByCredentials = function(mail,password){
+    var Person = this;
+    return Person.findOne({ where: {mail:mail}})
+                 .then(p=>{
+                    if(!p){
+                        console.log('user not exists!!')
+                        return Promise.reject({})
+                    }
+                    return new Promise((resolve,reject)=>{
+                        let isPassEqual = bcrypt.compareSync(password, p.password);
+                        if(isPassEqual){
+                            console.log('user exists and authenticated',JSON.stringify(p,undefined,2))
+                            resolve(p)
+                        }else{
+                            console.log('user exists and NOT authenticated',p)
+                            reject({})
+                        }
+                    })
+                 })
+}
+
 PersonModel.findByToken = function(token){
     var Person = this;
     var decoded;
