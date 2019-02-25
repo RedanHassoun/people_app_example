@@ -11,9 +11,8 @@ export class AuthenticationService {
   constructor(private http: Http) {
   }
 
-  login(credentials) { 
-    console.log('REDN: Sending cred='+JSON.stringify(credentials))
-    return this.http.post('/api/authenticate', credentials)
+  login(credentials) {
+    return this.http.post('/api/users/login', credentials)
    }
  
    logout() {
@@ -25,6 +24,7 @@ export class AuthenticationService {
      let token = localStorage.getItem(AppConsts.KEY_USER_TOKEN)
      if(token && token !== 'undefined'){
       return true
+      // TODO
       //  let expirationDate = jwtHelper.getTokenExpirationDate(token)
       //  let isExpired = jwtHelper.isTokenExpired(token)
       //  if(!isExpired)

@@ -3,10 +3,11 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/Observable/throw';
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import { BadInputError } from './../common/bad-input-error';
 import { NotFoundError } from './../common/not-found-error';
 import { AppError } from './../common/app-error';
+import { AppConsts } from '../common/app-consts';
 
 @Injectable({
   providedIn: 'root'
@@ -15,19 +16,27 @@ export class ClientDataService {
   constructor(private url:string,private http: Http) { 
   }
 
+  private createAuthorizationHeader(headers: Headers) {
+    headers.append('x-auth', localStorage.getItem(AppConsts.KEY_USER_TOKEN)); 
+  }
+
   getAll(){
-    return this.http.get(this.url)
+    let headers = new Headers();
+    this.createAuthorizationHeader(headers);
+    return this.http.get(this.url,{ headers: headers})
                 .map(response => response.json())
                 .catch(this.handleError)
   }
 
-  delete(id:string){ 
-    return this.http.delete(this.url + id)
+  delete(id:string){
+    let headers = new Headers();
+    this.createAuthorizationHeader(headers);
+    return this.http.delete(this.url + id,{ headers: headers})
                 .map(response => response.json())
                 .catch(this.handleError)
   }
 
-  create(resource){ 
+  create(resource){
     return this.http.post(this.url,resource.json())
               .map(response => response.json())
               .catch(this.handleError)

@@ -18,20 +18,22 @@ export class LoginComponent implements OnInit {
 
   signIn(credentials) {
     const obj = {
-      email:credentials.email,
+      mail:credentials.email,
       password:credentials.password
     }
     this.authService.login(obj)
-      .subscribe(response => { 
-        const result = response.json()
-        console.log('REDAN: result='+JSON.stringify(result))
-        if (result && result.status === 200){
-          localStorage.setItem(AppConsts.KEY_USER_TOKEN,result.token);
+      .subscribe(response => {
+        if (response['_body'] && response['status'] === 200){
+          let headers = response['headers'].toJSON()
+          localStorage.setItem(AppConsts.KEY_USER_TOKEN,headers['x-auth'][0]);
           console.log(localStorage.getItem(AppConsts.KEY_USER_TOKEN))
           this.router.navigate(['/people']);
         } 
-        else  
-          this.invalidLogin = true; 
+        else{
+          console.log('Invalid login')
+          this.invalidLogin = true;
+        }
+          
       });
   }
 

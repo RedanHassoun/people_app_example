@@ -5,9 +5,9 @@ import _ = require('lodash');
 import bcrypt = require('bcryptjs');
 import {Promise} from 'es6-promise'
 
-const SECRET_KEY:string = process.env.JWT_SECRET
+const SECRET_KEY:string = 'aasdwwff4kf856gsdjoow4tghoy455gsgdrghns455' // TODO: use config
 const connection = new Sequelize('db','user','pass',{
-    host: process.env.DB_HOST,
+    host: 'localhost',
     dialect: 'sqlite',
     storage: 'db.sqlite',
     operatorsAliases:false
