@@ -26,7 +26,7 @@ class ServerApp{
       res.send(result)
     })
      
-    this.app.get('/api/peopleapp', (req,res)=>{
+    this.app.get('/api/peopleapp',authenticate, (req,res)=>{
       this.peopleService.getAllPeople()
         .then(people=>{
           res.json(people)
@@ -54,7 +54,7 @@ class ServerApp{
     })
  
     
-    this.app.delete('/api/peopleapp/:id', (req,res)=>{
+    this.app.delete('/api/peopleapp/:id',authenticate, (req,res)=>{
       console.log('Deleting person id:'+req.params.id);
       this.peopleService.deletePerson(req.params.id)
         .then(()=>{
