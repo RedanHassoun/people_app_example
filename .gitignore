@@ -9,6 +9,7 @@
 /node_modules
 /src/server/*.js
 /server/*.js
+/server/config/config.json
 /server/repo/*.js
 /server/middleware/*.js
 /server/models/*.js
