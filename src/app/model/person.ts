@@ -5,9 +5,25 @@ export class Person {
     address:string = ""
     gender:string = ""
     isHidden:boolean = true 
+    password:string = ""
+    passwordConfirm:string = ""
 
+    isPasswordMatch():boolean{
+        if(this.password && this.password === this.passwordConfirm){
+            return true
+        }
+        return false
+    }
     setId(id:string){
         this.id = id 
+    }
+
+    getPassword():string{
+        return this.password 
+    }
+
+    setPassword(password:string):void{
+        this.password = password
     }
 
     setName(name:string){
@@ -52,7 +68,8 @@ export class Person {
             name : this.name,
             mail : this.mail,
             gender: this.gender,
-            address : this.address 
+            address : this.address,
+            password: this.password
         }
     }
 
@@ -61,13 +78,16 @@ export class Person {
         this.mail = ""
         this.address = ""
         this.gender = ""
+        this.password = ""
+        this.passwordConfirm = ""
     }
 
     isEmpty(){
         return (this.getName().trim() ==="") || 
         (this.getAddress().trim() ==="") || 
         (this.getMail().trim() ==="") || 
-        (this.getGender().trim() ==="")
+        (this.getGender().trim() ==="") ||
+        (this.getPassword().trim() ==="")
     }
 	
 	static fromRequest(req):Person{ 

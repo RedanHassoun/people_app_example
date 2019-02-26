@@ -22,6 +22,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { ProfileComponent } from './profile/profile.component'; 
 import { LoginComponent } from './login/login.component'; 
 import { AppConsts } from './common/app-consts';
+import { RegisterComponent } from './register/register.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { AppConsts } from './common/app-consts';
     NavbarComponent,
     NotFoundComponent,
     ProfileComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   entryComponents: [
     AddPersonComponent
@@ -51,6 +53,10 @@ import { AppConsts } from './common/app-consts';
       {
         path: AppConsts.ROUTE_LOGIN,
         component: LoginComponent
+      },
+      {
+        path: AppConsts.ROUTE_REGISTER,
+        component: RegisterComponent
       },
       {
         path: 'people/:username/:id',

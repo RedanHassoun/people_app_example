@@ -3,5 +3,6 @@ export class AppConsts{
 
     /* Routes */
     static readonly ROUTE_LOGIN = ''
+    static readonly ROUTE_REGISTER = 'register'
     static readonly ROUTE_PEOPLE = '/people'
 }

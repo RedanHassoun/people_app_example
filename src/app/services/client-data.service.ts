@@ -38,7 +38,6 @@ export class ClientDataService {
 
   create(resource){
     return this.http.post(this.url,resource.json())
-              .map(response => response.json())
               .catch(this.handleError)
   }
 

@@ -1,0 +1,19 @@
+<h4>Add a new person: </h4>
+Name : <input [(ngModel)]="newPerson.name" class="form-control"/>
+Mail : <input [(ngModel)]="newPerson.mail" class="form-control"/>
+Address : <input [(ngModel)]="newPerson.address" class="form-control"/>
+Password : <input [(ngModel)]="newPerson.password" class="form-control"/>
+Confirm Password : <input [(ngModel)]="newPerson.passwordConfirm" class="form-control"/>
+<div id="gender-div">
+Gender : <mat-radio-group [(ngModel)]="newPerson.gender">
+        <mat-radio-button value="Male" style="padding:3px">Male</mat-radio-button>
+        <mat-radio-button value="Female" style="padding:3px">Female</mat-radio-button>
+</mat-radio-group>
+</div>
+
+<br/>
+<hr/>
+<button id="cancel-btn" class="btn btn-default" routerLink="/">Cancel</button>
+        
+<button id="add-person-btn" class="btn btn-primary"
+        (click)="addPerson()">Add person</button>

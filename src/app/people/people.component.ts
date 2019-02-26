@@ -55,6 +55,7 @@ export class PeopleComponent implements OnInit,OnDestroy {
   }
 
   openAddPersonDialog(){
+    // TODO : remove
     console.log('Opening dialog')
     this.dialog.open(AddPersonComponent)
                   .afterClosed()

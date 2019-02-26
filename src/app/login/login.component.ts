@@ -2,6 +2,7 @@ import { AuthenticationService } from './../services/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppConsts } from '../common/app-consts';
+import { AppUtil } from '../common/app-util';
 
 @Component({
   selector: 'login',
@@ -24,9 +25,7 @@ export class LoginComponent implements OnInit {
     this.authService.login(obj)
       .subscribe(response => {
         if (response['_body'] && response['status'] === 200){
-          let headers = response['headers'].toJSON()
-          localStorage.setItem(AppConsts.KEY_USER_TOKEN,headers['x-auth'][0]);
-          console.log(localStorage.getItem(AppConsts.KEY_USER_TOKEN))
+          AppUtil.extractAndSaveToken(response)
           this.router.navigate(['/people']);
         } 
         else{
