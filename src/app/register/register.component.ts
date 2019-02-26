@@ -60,6 +60,9 @@ export class RegisterComponent implements OnInit {
     } 
   }
 
+  cancel():void{
+    this.router.navigate(['/'], { replaceUrl: true });
+  }
 
   private addToPeople(person){
     /* Dispatch an action to redux reducer */

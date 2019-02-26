@@ -13,7 +13,7 @@ Gender : <mat-radio-group [(ngModel)]="newPerson.gender">
 
 <br/>
 <hr/>
-<button id="cancel-btn" class="btn btn-default" routerLink="/">Cancel</button>
+<button id="cancel-btn" class="btn btn-default" (click)="cancel()">Cancel</button>
         
 <button id="add-person-btn" class="btn btn-primary"
         (click)="addPerson()">Add person</button>
