@@ -17,15 +17,8 @@ class ServerApp{
   }
  
   init(){
-    this.app.use(bodyParser.json()); 
+    this.app.use(bodyParser.json());
     
-    this.app.post('/api/authenticate', (req,res)=>{
-      let result = this.authService.authenticate(req.body.email,req.body.password)
-      Logger.log('Server result: '+result)
-
-      res.send(result)
-    })
-     
     this.app.get('/api/peopleapp',authenticate, (req,res)=>{
       this.peopleService.getAllPeople()
         .then(people=>{
