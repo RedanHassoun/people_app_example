@@ -1,3 +1,4 @@
+import { NotificationService } from './../services/notification.service';
 import { Component, OnInit } from '@angular/core';
 import { Person } from '../model/person';
 import { PeopleService } from '../services/people.service';
@@ -21,7 +22,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(private peopleService:PeopleService,
               private router: Router,
-              private ngRedux:NgRedux<IAppState>) { 
+              private ngRedux:NgRedux<IAppState>,
+              private notifyService:NotificationService) { 
   }
 
   ngOnInit() {
@@ -45,6 +47,7 @@ export class RegisterComponent implements OnInit {
                     this.addToPeople(response.json()) 
                     this.newPerson.reset()
                     AppUtil.extractAndSaveToken(response)
+                    this.notifyService.personAdded('')
                     this.router.navigate(['/people']);
                   },
                   (error:AppError)=>{

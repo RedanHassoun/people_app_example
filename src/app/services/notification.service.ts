@@ -20,4 +20,8 @@ export class NotificationService {
   personDeleted(personId:string):void{
     this.socket.emit(AppConsts.PERSON_DELETED, personId);
   }
+
+  personAdded(personId:string):void{
+    this.socket.emit(AppConsts.PERSON_ADDED, personId);
+  }
 }

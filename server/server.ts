@@ -117,6 +117,10 @@ class ServerApp{
       socket.on('personDeleted',(a)=>{
         this.io.emit('refreshPeople')
       })
+
+      socket.on('personAdded',(a)=>{
+        this.io.emit('refreshPeople')
+      })
     })
   }
 }

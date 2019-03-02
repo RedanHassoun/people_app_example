@@ -9,4 +9,5 @@ export class AppConsts{
     /* Socket messages */
     static readonly PERSON_DELETED = 'personDeleted'
     static readonly REFRESH_PEOPLE = 'refreshPeople'
+    static readonly PERSON_ADDED = 'personAdded'
 }
