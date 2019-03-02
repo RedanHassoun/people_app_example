@@ -11,6 +11,7 @@ import { Component, OnInit,ViewChild, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddPersonComponent } from 'src/app/add-person/add-person.component';
 import {MatTable} from '@angular/material';
+import { NotificationService } from '../services/notification.service';
 
 @Component({
   selector: 'app-people',
@@ -27,7 +28,8 @@ export class PeopleComponent implements OnInit,OnDestroy {
               private ngRedux:NgRedux<IAppState>,
               private dialog:MatDialog,
               private authenticationService:AuthenticationService,
-              private router: Router) {
+              private router: Router,
+              private notifyService:NotificationService) {
       this.storeUnsubscribe = ngRedux.subscribe(()=>{
         var currState = ngRedux.getState()
         this.peopleArray = currState.peopleArray
@@ -36,6 +38,14 @@ export class PeopleComponent implements OnInit,OnDestroy {
   }
 
   ngOnInit() { 
+    this.initPeople()
+    this.notifyService.listenToPeopleChanges()
+                        .subscribe(()=>{
+                            this.initPeople()
+                        })
+  }
+
+  initPeople():void{
     this.peopleService.getAll()
                         .subscribe((people)=>{
                           console.log('ngOnInit | '+people)
@@ -75,7 +85,8 @@ export class PeopleComponent implements OnInit,OnDestroy {
   deletePerson(personToDelete){
     this.peopleService.delete(personToDelete.id)
                         .subscribe( (response) => {
-                          this.removeFromPeople(personToDelete) 
+                          this.removeFromPeople(personToDelete)
+                          this.notifyService.personDeleted(personToDelete.id)
                         },
                         (error:AppError)=>{
                           if(error instanceof NotFoundError){

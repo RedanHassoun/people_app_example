@@ -5,11 +5,15 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import { AuthService } from './auth.service';
 import _ = require('lodash');
+import socketIO = require('socket.io');
+import http = require('http');
 import { authenticate } from './middleware/authenticate';
 const SERVER_PORT:number = 3000
 
 class ServerApp{  
   private readonly app = express() 
+  private server;
+  private io;
 
   constructor(private port:number,
               private peopleService:DataService,
@@ -18,7 +22,6 @@ class ServerApp{
  
   init(){
     this.app.use(bodyParser.json());
-    
     this.app.get('/api/peopleapp',authenticate, (req,res)=>{
       this.peopleService.getAllPeople()
         .then(people=>{
@@ -101,7 +104,20 @@ class ServerApp{
             })
     });
 
-    this.app.listen(this.port,()=>{})
+    this.server = http.createServer(this.app)
+    this.io = socketIO(this.server)
+
+    this.server.listen(this.port,()=>{
+      console.log(`Server is up on port: ${this.port}`)
+    })
+
+    this.io.on('connection', (socket) => {
+      console.log('Socket connection is up!') 
+
+      socket.on('personDeleted',(a)=>{
+        this.io.emit('refreshPeople')
+      })
+    })
   }
 }
 

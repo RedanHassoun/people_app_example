@@ -23,7 +23,9 @@ import { ProfileComponent } from './profile/profile.component';
 import { LoginComponent } from './login/login.component'; 
 import { AppConsts } from './common/app-consts';
 import { RegisterComponent } from './register/register.component';
-
+import { SocketIoModule, SocketIoConfig, Socket } from 'ngx-socket-io';
+import { NotificationService } from './services/notification.service';
+const config: SocketIoConfig = { url: 'http://localhost:3000/', options: {} };
 
 @NgModule({
   declarations: [
@@ -49,6 +51,7 @@ import { RegisterComponent } from './register/register.component';
     MatDialogModule,
     MatRadioModule,
     MatTableModule,
+    SocketIoModule.forRoot(config),
     RouterModule.forRoot([
       {
         path: AppConsts.ROUTE_LOGIN,
@@ -79,13 +82,27 @@ import { RegisterComponent } from './register/register.component';
   ],
   providers: [
     PeopleService,
+    NotificationService,
     AuthGaurd,
     { provide: ErrorHandler , useClass: AppErrorHandler}
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-    constructor(private ngRedux:NgRedux<IAppState>){
+    constructor(private ngRedux:NgRedux<IAppState>,
+               private socket:Socket){
       this.ngRedux.configureStore(rootReducer,INITIAL_STATE)
+      this.initSocket()
+    }
+
+    private initSocket():void{
+      this.socket.fromEvent('disconnect')
+        .subscribe(()=>{
+          console.log('Disconnected from socket')
+        })
+      this.socket.fromEvent('connect')
+        .subscribe(()=>{
+          console.log('Connected to socket')
+        })
     }
  }
